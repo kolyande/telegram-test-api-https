@@ -4,7 +4,8 @@ import debugTest from 'debug';
 import EventEmitter from 'events';
 import type { ErrorRequestHandler, Express } from 'express';
 import express from 'express';
-import http from 'http';
+import https from 'https';
+import fs from 'fs';
 import shutdown from 'http-shutdown';
 import type {
   InlineKeyboardMarkup, Message, MessageEntity, Params,
@@ -24,6 +25,10 @@ import { routes } from './routes/index';
 
 const debugServer = debugTest('TelegramServer:server');
 const debugStorage = debugTest('TelegramServer:storage');
+const https_options = {
+    key: fs.readFileSync("ssl/key.pem"),
+    cert: fs.readFileSync("ssl/cert.pem")
+}
 
 interface WebHook {
   url: string;
@@ -398,7 +403,7 @@ export class TelegramServer extends EventEmitter {
   }
 
   async start() {
-    this.server = shutdown(http.createServer(this.webServer));
+    this.server = shutdown(https.createServer(https_options, this.webServer));
     await new Promise((resolve, reject) => {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       this.server!.listen(this.config.port, this.config.host)
