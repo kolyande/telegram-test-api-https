@@ -16,7 +16,7 @@ export const sendResult: Handler = (_req, res, next) => {
   res.sendError = (error) => {
     res
       .status('http' in error ? error.http : 500)
-      .json({ message: error.message || 'Message not implemented' });
+      .json({ description: error.message || 'Message not implemented' });
   };
 
   res.sendResult = (promise) => {
