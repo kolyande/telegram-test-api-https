@@ -17,6 +17,7 @@ export interface CallbackQueryRequest extends MessageMeta {
   message: CommonMessage;
   from: User;
   data: string;
+  chat_instance: string;
 }
 export type MessageRequest = CommonMessage & MessageMeta & {
   text: string;
@@ -160,6 +161,7 @@ export class TelegramClient {
         from: message.from,
         message,
         data,
+        chat_instance: this.chatId.toString(),
       },
       options,
     );

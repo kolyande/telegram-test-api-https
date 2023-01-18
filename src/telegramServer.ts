@@ -509,6 +509,7 @@ export class TelegramServer extends EventEmitter {
           from: update.callbackQuery.from,
           message: update.callbackQuery.message,
           data: update.callbackQuery.data,
+	  chat_instance: update.callbackQuery.chat_instance,
         },
       };
     }
