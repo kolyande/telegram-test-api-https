@@ -158,7 +158,7 @@ export class TelegramServer extends EventEmitter {
     const appConfig = {
       port: config.port || 9000,
       host: config.host || 'localhost',
-      protocol: config.protocol || 'http',
+      protocol: config.protocol || 'https',
       storage: config.storage || 'RAM',
       storeTimeout: (config.storeTimeout || 60) * 1000, // store for a minute by default
       apiURL: '',
