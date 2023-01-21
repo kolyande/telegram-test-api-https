@@ -397,6 +397,17 @@ export class TelegramServer extends EventEmitter {
     // turn messages into updates
     return messages.map((update) => {
       // eslint-disable-next-line no-param-reassign
+      return TelegramServer.formatUpdate(update);
+    });
+  }
+
+  confirmUpdates(token: string, offset: number) {
+    const messages = this.storage.userMessages.filter(
+      (update) => update.botToken === token && !update.isRead && update.updateId < offset,
+    );
+    // turn messages into updates
+    return messages.map((update) => {
+      // eslint-disable-next-line no-param-reassign
       update.isRead = true;
       return TelegramServer.formatUpdate(update);
     });

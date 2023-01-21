@@ -6,7 +6,14 @@ export const getUpdates: Route = (app, telegramServer) => {
   handle(app, '/bot:token/getUpdates', (req, res, _next) => {
     const botToken = req.params.token;
 
-    const data = { ok: true, result: telegramServer.getUpdates(botToken) };
-    res.sendResult(data);
+    if(req.body.offset) {
+      const offset = Number(req.body.offset);
+      const data = { ok: true, result: telegramServer.confirmUpdates(botToken, offset) };
+      res.sendResult(data);
+    }
+    else {
+      const data = { ok: true, result: telegramServer.getUpdates(botToken) };
+      res.sendResult(data);
+    }
   });
 };
